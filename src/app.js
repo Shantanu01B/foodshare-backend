@@ -25,6 +25,11 @@ app.use("/ngo", ngoRoutes);
 app.use("/volunteer", volunteerRoutes);
 app.use("/api/stats", statsRoutes);
 
+
+app.get("/", (req, res) => {
+    res.send("FoodShare backend is running 🚀");
+});
+
 // Error handling middleware
 app.use((err, req, res, next) => {
     console.error(err.stack);
