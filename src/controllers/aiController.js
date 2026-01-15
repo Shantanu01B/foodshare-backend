@@ -6,7 +6,8 @@ import { geminiChat } from "../config/gemini.js";
 // -----------------------------------------------------
 export const chat = async function(req, res) {
     try {
-        const message = req.body && req.body.message ? req.body.message : null;
+        const message =
+            req.body && req.body.message ? req.body.message : null;
 
         if (!message) {
             return res.status(400).json({ message: "Message is required" });
@@ -20,13 +21,20 @@ export const chat = async function(req, res) {
             "User: " + message;
 
         const reply = await geminiChat(prompt);
-        return res.json({ reply });
+
+        // 🔥 IMPORTANT FIX (fallback if Gemini returns empty)
+        return res.json({
+            reply: reply && reply.trim().length > 0 ?
+                reply :
+                "Based on food safety guidelines, food should be stored properly and donated as soon as possible."
+        });
 
     } catch (err) {
         console.error("Chat error:", err);
         return res.status(500).json({ message: "AI chat failed" });
     }
 };
+
 
 
 
