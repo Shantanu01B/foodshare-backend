@@ -1,4 +1,5 @@
-import { groqChat } from "../config/groq.js";
+import { geminiChat } from "../config/gemini.js";
+
 
 // -----------------------------------------------------
 // 1) CHAT — conversational, human-like responses
@@ -18,7 +19,7 @@ export const chat = async function(req, res) {
             "Speak naturally like a human.\n\n" +
             "User: " + message;
 
-        const reply = await groqChat(prompt);
+        const reply = await geminiChat(prompt);
         return res.json({ reply });
 
     } catch (err) {
@@ -56,7 +57,7 @@ export const freshness = async function(req, res) {
             '  "reason": "short explanation like: expires in 3 hours"\n' +
             "}";
 
-        const raw = await groqChat(prompt);
+        const raw = await geminiChat(prompt);
 
         const start = raw.indexOf("{");
         const end = raw.lastIndexOf("}");
@@ -98,7 +99,7 @@ export const suggestions = async function(req, res) {
             '  "description": "short natural description"\n' +
             "}";
 
-        const raw = await groqChat(prompt);
+        const raw = await geminiChat(prompt);
 
         const start = raw.indexOf("{");
         const end = raw.lastIndexOf("}");
